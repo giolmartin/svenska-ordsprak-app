@@ -1,9 +1,12 @@
 const express = require('express');
 
-const { getAllQuotes } = require('./quotes.controller');
+const { getAllQuotes, getSingleQuoteId } = require('./quotes.controller');
 
 const quotesRouter = express.Router();
 
 quotesRouter.get('/', getAllQuotes);
+quotesRouter.get('/:id', getSingleQuoteId);
 
-module.exports = quotesRouter;
+module.exports = 
+    quotesRouter
+;

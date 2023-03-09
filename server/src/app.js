@@ -22,3 +22,5 @@ app.get('/*', (req, res) => {
 });
 
 module.exports = app;
+
+// mongodb+srv://swedish-quotes-api:<password>@swedishquotes.1dybxiz.mongodb.net/?retryWrites=true&w=majority
