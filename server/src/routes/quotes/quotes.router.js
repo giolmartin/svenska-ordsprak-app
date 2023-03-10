@@ -1,11 +1,11 @@
 const express = require('express');
 
-const { getAllQuotes, getSingleQuoteId } = require('./quotes.controller');
+const { httpGetAllQuotes, httpGetSingleQuoteId } = require('./quotes.controller');
 
 const quotesRouter = express.Router();
 
-quotesRouter.get('/', getAllQuotes);
-quotesRouter.get('/:id', getSingleQuoteId);
+quotesRouter.get('/', httpGetAllQuotes);
+quotesRouter.get('/:id', httpGetSingleQuoteId);
 
 module.exports = 
     quotesRouter

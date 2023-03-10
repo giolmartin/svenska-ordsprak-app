@@ -1,4 +1,4 @@
-const { populateQuotes, getQuoteById } = require('../../models/quotes.model');
+const { getAllQuotes, getQuoteById } = require('../../models/quotes.model');
 
 // const quotes1 = [
 //   {
@@ -16,21 +16,17 @@ const { populateQuotes, getQuoteById } = require('../../models/quotes.model');
 //   },
 // ];
 
-async function getAllQuotes(req, res) {
+async function httpGetAllQuotes(req, res) {
   console.log('Getting all quotes ...');
-  const quotes = await populateQuotes(res.status);
-  return res.status(200).json(quotes);
+  return res.status(200).json(await getAllQuotes());
 }
 
-async function getSingleQuoteId(req, res) {
+async function httpGetSingleQuoteId(req, res) {
   console.log('Getting quote by id ...');
-
-  const quote = await getQuoteById(req.params.id);
-  
-  return res.status(200).json(quote);
+  return res.status(200).json(await getQuoteById(req.params.id));
 }
 
 module.exports = {
-  getAllQuotes,
-  getSingleQuoteId,
+  httpGetAllQuotes,
+  httpGetSingleQuoteId,
 };

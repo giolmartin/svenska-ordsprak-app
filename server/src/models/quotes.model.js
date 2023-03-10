@@ -1,47 +1,107 @@
 const axios = require('axios');
-const { getAllQuotes } = require('../routes/quotes/quotes.controller');
+
+const quotes = require('./quotes.mongo');
 
 const SVENSKA_ORDSPRAK_URL =
   'https://giolmartin.github.io/svenska-ordsprak-API/data/svenska-ordsprak.json';
 
-const quoteAndTranslation = [];
-let counter = 0;
-
 async function populateQuotes() {
-  console.log('Downloading quotes ...');
-  const response = await axios.get(SVENSKA_ORDSPRAK_URL);
+  /**
+   * 1. Download quotes from the API
+   * 2. Save quotes to the DB
+   * 3. Verify that the quotes are saved in the DB
+   */
 
-  //   console.log(response);
+  const response = await downloadFromAPI();
+
+  const quoteDocs = response.data; //docs is the array of quotes
+
+  //IIf DB is erased, empty or needs to be updated with new quotes the following two lines should be
+  //commented out with their corresponding closing bracket.
+  const isDBEmpty = (await getAllQuotes()).length === 0;
+  if (isDBEmpty) {
+    if (quoteDocs) {
+      let counter = 1;
+      for (quoteDoc of quoteDocs) {
+        const text = quoteDoc['text'];
+        const translation = quoteDoc['translation-EN'];
+
+        const quote = {
+          id: String(counter),
+          quote: text,
+          translation: translation,
+        };
+        await saveQuote(quote);
+        counter++;
+      }
+    } else {
+      console.log('No quotes to save');
+    }
+  }
+
+  // countQuotesInDocument();
+}
+
+async function downloadFromAPI() {
+  const response = await axios.get(SVENSKA_ORDSPRAK_URL);
 
   if (response.status !== 200) {
     console.log('Problem downloading quotes');
     throw new Error('Quote download failed');
   }
+  return response;
+}
 
-  const quoteDocs = response.data; //docs is the array of quotes
-  for (quoteDoc of quoteDocs) {
-    const text = quoteDoc['text'];
-    const translation = quoteDoc['translation-EN'];
-
-    quoteAndTranslation.push({
-      id: String(counter),
-      text: text,
-      translation: translation,
-    });
-    counter++;
-    // console.log(`Text ${text}  Translation ${translation}`);
+async function saveQuote(quote) {
+  const quoteDoc = {};
+  try {
+    //pass what should be created
+    await quotes.findOneAndUpdate(
+      {
+        id: quote.id,
+        quote: quote.quote,
+        translation: quote.translation,
+      },
+      {
+        id: quote.id,
+        quote: quote.quote,
+        translation: quote.translation,
+      },
+      {
+        upsert: true, //insert + update
+      }
+    );
+  } catch (err) {
+    console.log(`Could not save quote ${quoteDoc} to DB: ${err}`);
   }
-  return quoteAndTranslation;
+}
+
+//Gets all quotes from the DB
+async function getAllQuotes() {
+  return await quotes.find({}, '-_id -__v');
 }
 
 async function getQuoteById(id) {
-  const quotes = await populateQuotes();
+  const MAX_ID = (await getAllQuotes()).length;
+  const ID_NUMBER_OUT_OF_RANGE_STRING = `There is no quote with that id, please try again with a number between 1 and ${MAX_ID}`;
 
-  const quote = quotes.find((quote) => quote.id === id);
-  return quote;
+  //Check if quote_ID exists before finding it
+  if (id > 0 && id <= MAX_ID) {
+    const quote = await quotes.find({ id: id }, '-_id -__v');
+    return quote;
+  } else {
+    return ID_NUMBER_OUT_OF_RANGE_STRING;
+  }
+}
+
+// helper function to verify that the quotes are saved in the DB
+async function countQuotesInDocument() {
+  const numberOfQuotes = (await getAllQuotes()).length;
+  console.log(`There are ${numberOfQuotes} quotes in the document`);
 }
 
 module.exports = {
-  populateQuotes,
   getQuoteById,
+  getAllQuotes,
+  populateQuotes,
 };
