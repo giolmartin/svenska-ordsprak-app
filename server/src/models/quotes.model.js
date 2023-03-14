@@ -43,7 +43,9 @@ async function populateQuotes() {
 }
 
 async function downloadFromAPI() {
-  const response = await axios.get(SVENSKA_ORDSPRAK_URL);
+  const response = await axios.get(SVENSKA_ORDSPRAK_URL, {
+    query: {},
+  });
 
   if (response.status !== 200) {
     console.log('Problem downloading quotes');
@@ -76,9 +78,9 @@ async function saveQuote(quote) {
   }
 }
 
-//Gets all quotes from the DB
-async function getAllQuotes() {
-  return await quotes.find({}, '-_id -__v');
+//Gets all quotes from the DB or paginated quotes set to 20 per page
+async function getAllQuotes(skip, limit) {
+  return await quotes.find({}, '-_id -__v').skip(skip).limit(limit);
 }
 
 async function getQuoteById(id) {
