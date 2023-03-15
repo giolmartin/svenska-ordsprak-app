@@ -1,9 +1,9 @@
-import { useState, useEffect, Fragment } from 'react';
+import { useState, useContext, Fragment } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 // import Button from '../../components/button/button.component';
-import { httpGetSingleQuoteId } from '../../context/quotes.requests';
 import QuoteCard from '../../components/quote-card/quote-card.component';
 import { getTotalAmnountQuotes } from '../../context/quotes.context';
+import { QuotesContext } from '../../context/quotes.context';
 
 import {
   SingleQuoteContainer,
@@ -46,17 +46,18 @@ const SingleQuote = () => {
   //   },
   // ];
   const navigate = useNavigate();
-
+  const { setId } = useContext(QuotesContext);
   const { id } = useParams();
 
   const [quote, setQuote] = useState({});
 
   //Could update with a fetch to the db with id=0...?
-  // const AMOUNT_OF_QUOTES = 3;
+
   const AMOUNT_OF_QUOTES = getTotalAmnountQuotes();
 
-  // console.log('quotes: ', quotes);
-  // console.log('Amount of quotes: ', AMOUNT_OF_QUOTES);
+  //------------------DEV_QUOTE_DATA-----------------------
+  /*
+  const AMOUNT_OF_QUOTES = 3;
   const quotes = [
     {
       id: '1',
@@ -76,24 +77,26 @@ const SingleQuote = () => {
         'Goodbye, Svenserud, said Päte, when he traveled to America and never got there.',
     },
   ];
+*/
+  //------------------------------------------------------
 
-  useEffect(() => {
-    const getQuote = async () => {
-      //-------------------PROD-----------------------
-      // const quote = await httpGetSingleQuoteId(id);
-      // setQuote(quote.find((q) => q.id === String(id)));
-      //----------------------------------------------
+  // useEffect(() => {
+  //   const getQuote = async () => {
+  //     //-------------------PROD-----------------------
+  //     const quote = await httpGetSingleQuoteId(id);
+  //     setQuote(quote.find((q) => q.id === String(id)));
+  //     //----------------------------------------------
 
-      //------------------DEV-------------------------
-      setQuote(quotes.find((q) => q.id === String(id)));
-      //----------------------------------------------
-    };
-    getQuote();
+  //     //------------------DEV-------------------------
+  //     // setQuote(quotes.find((q) => q.id === String(id)));
+  //     //----------------------------------------------
+  //   };
+  //   getQuote();
 
-    // return () => {
-    //   // console.log('useEffect cleanup');
-    // };
-  }, [id]);
+  //   // return () => {
+  //   //   // console.log('useEffect cleanup');
+  //   // };
+  // }, [id]);
 
   //----------------------------------------------
   //TODO: Add error handling

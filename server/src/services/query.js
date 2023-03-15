@@ -1,6 +1,5 @@
 const DEFAULT_PAGE_NUMBER = 1;
-const DEFAULT_PAGE_LIMIT = 12; //Shows all the data
-
+const DEFAULT_PAGE_LIMIT = 4; //Shows 4 quotes as default 
 function getPagination(query) {
   console.log(query);
   const page = Math.abs(query.page) || DEFAULT_PAGE_NUMBER;
