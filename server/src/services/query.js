@@ -1,5 +1,5 @@
 const DEFAULT_PAGE_NUMBER = 1;
-const DEFAULT_PAGE_LIMIT = 20; //Shows all the data
+const DEFAULT_PAGE_LIMIT = 12; //Shows all the data
 
 function getPagination(query) {
   console.log(query);

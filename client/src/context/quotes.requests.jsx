@@ -3,10 +3,10 @@ const API_URL = 'v1';
 async function httpGetAllQuotes(query) {
   console.log('Fetching all quotes');
 
+  //URL search params needs to be a string
   const params = new URLSearchParams(query).toString();
   const response = await fetch(`/${API_URL}/quotes?${params}`);
   console.log(params);
-  console.log('Response: ', response);
   const data = await response.json();
   return data;
 }

@@ -1,9 +1,9 @@
-import { useState, useEffect, useContext, Fragment } from 'react';
+import { useState, useEffect, Fragment } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 // import Button from '../../components/button/button.component';
 import { httpGetSingleQuoteId } from '../../context/quotes.requests';
 import QuoteCard from '../../components/quote-card/quote-card.component';
-import { QuotesContext } from '../../context/quotes.context';
+import { getTotalAmnountQuotes } from '../../context/quotes.context';
 
 import {
   SingleQuoteContainer,
@@ -11,7 +11,6 @@ import {
 } from './single-quote.styles';
 
 const SingleQuote = () => {
-  // const { quotes } = useContext(QuotesContext);
   // const quotes = [
   //   {
   //     id: '1',
@@ -50,19 +49,44 @@ const SingleQuote = () => {
 
   const { id } = useParams();
 
-
   const [quote, setQuote] = useState({});
 
-  // const AMOUNT_OF_QUOTES = quotes.length;
-  const AMOUNT_OF_QUOTES = 3451;
+  //Could update with a fetch to the db with id=0...?
+  // const AMOUNT_OF_QUOTES = 3;
+  const AMOUNT_OF_QUOTES = getTotalAmnountQuotes();
 
   // console.log('quotes: ', quotes);
   // console.log('Amount of quotes: ', AMOUNT_OF_QUOTES);
+  const quotes = [
+    {
+      id: '1',
+      quote: 'Adam sköt skulden på Eva och Eva på ormen.',
+      translation: 'Adam put the blame on Eve and Eve on the serpent.',
+    },
+    {
+      id: '2',
+      quote: 'Adel utan dygd är lykta utan ljus.',
+      translation: 'Nobility without virtue is a lantern without light.',
+    },
+    {
+      id: '3',
+      quote:
+        'Adjö, Svenserud, sa Päte, när han reste till Amerika och aldrig kom dit.',
+      translation:
+        'Goodbye, Svenserud, said Päte, when he traveled to America and never got there.',
+    },
+  ];
 
   useEffect(() => {
     const getQuote = async () => {
-      const quote = await httpGetSingleQuoteId(id);
-      setQuote(quote.find((q) => q.id === String(id)));
+      //-------------------PROD-----------------------
+      // const quote = await httpGetSingleQuoteId(id);
+      // setQuote(quote.find((q) => q.id === String(id)));
+      //----------------------------------------------
+
+      //------------------DEV-------------------------
+      setQuote(quotes.find((q) => q.id === String(id)));
+      //----------------------------------------------
     };
     getQuote();
 
@@ -70,8 +94,6 @@ const SingleQuote = () => {
     //   // console.log('useEffect cleanup');
     // };
   }, [id]);
-
-
 
   //----------------------------------------------
   //TODO: Add error handling
