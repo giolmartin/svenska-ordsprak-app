@@ -1,4 +1,5 @@
 import { createContext, useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import { httpGetAllQuotes, httpGetSingleQuoteId } from './quotes.requests';
 
@@ -6,46 +7,55 @@ export const QuotesContext = createContext({
   quotes: [],
   page: 1,
   quotesPerPage: 4,
-  id: '',
   nextPage: () => {},
   previousPage: () => {},
   randomPage: () => {},
+  id: '',
+  quote: {},
+  previousQuote: () => {},
+  nextQuote: () => {},
+  randomQuote: () => { },
+  loading: false,
 });
 
 export const QuotesProvider = ({ children }) => {
   const [quotes, setQuotes] = useState([]);
-  const [loading, setLoading] = useState(false);
   const [currentPage, setPage] = useState(1);
   const [quotesPerPage, setQuotesPerPage] = useState(4);
-  const [idQuote, setId] = useState('');
+
+  const [quote, setQuote] = useState({});
+  const [id, setId] = useState('');
+  const navigate = useNavigate();
+
+  const [loading, setLoading] = useState(false); //TODO: Add loading state
+
   const amountOfPages = Math.ceil(getTotalAmnountQuotes() / quotesPerPage);
-  console.log(amountOfPages);
- 
+  const AMOUNT_OF_QUOTES = getTotalAmnountQuotes();
 
   useEffect(() => {
+    
     const getQuotes = async () => {
-      
+      let isSubscribed = true;
       //get query params from url
       const query = setQueryParams(currentPage, quotesPerPage);
-      console.log('query: ', query);
-      const quotes = await httpGetAllQuotes(query);
+      if (!isSubscribed) return;
 
-      setQuotes(quotes);
-      console.log(quotes);
+      if (!id) {
+        const quotes = await httpGetAllQuotes(query);
+        setQuotes(quotes);
+      } else {
+        const quote = await httpGetSingleQuoteId(id);
+        setQuote(quote.find((q) => q.id === String(id)));
+      }
+      return () => {
+        // console.log('useEffect cleanup');
+        isSubscribed = false;
+      };
     };
     getQuotes();
-  }, [currentPage, quotesPerPage]);
-
-  useEffect(() => {
-    const getQuoteById = async () => {
-      const quote = await httpGetSingleQuoteId(idQuote);
-      setQuotes(quote);
-    };
-    getQuoteById();
-  }, [idQuote]);
+  }, [currentPage, id]);
 
   const nextPage = () => {
-    console.log('next page start: ', currentPage);
     if (currentPage < amountOfPages) {
       setPage(currentPage + 1); //set query params in url
     } else {
@@ -54,7 +64,6 @@ export const QuotesProvider = ({ children }) => {
   };
 
   const previousPage = () => {
-    console.log('prev page start: ', currentPage);
     if (currentPage > 1) {
       setPage(currentPage - 1);
     } else {
@@ -71,27 +80,55 @@ export const QuotesProvider = ({ children }) => {
   const setQueryParams = (page, limit) => {
     const query = { page: page, limit: limit };
     return query;
+  };
 
-    // TODO: fix this
-    // const params = new URLSearchParams(window.location.search);
-    // if (params.get('page') === null && params.get('limit') === null) {
-    //   const query = { page: page, limit: limit };
-    //   return query;
-    // } else {
-    //   const page = params.get('page');
-    //   const limit = params.get('limit');
-    //   const query = { page: page, limit: limit };
-    //   return query;
-    // }
+  const previousQuote = () => {
+    try {
+      //Cycles back to the last quote
+      if (id <= 1) {
+        navigate(`/quotes/${AMOUNT_OF_QUOTES}`);
+      } else {
+        navigate(`/quotes/${id - 1}`);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  //Id is a string, so we need to convert it to a number
+  const nextQuote = () => {
+    try {
+      //Cycles back to the first quote
+      if (id >= AMOUNT_OF_QUOTES) {
+        navigate(`/quotes/1`);
+      } else {
+        navigate(`/quotes/${Number(id) + 1}`);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const randomQuote = () => {
+    try {
+      const randomId = Math.ceil(Math.random() * AMOUNT_OF_QUOTES);
+      console.log('randomId: ', randomId);
+      navigate(`/quotes/${randomId}`);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const value = {
     quotes,
     nextPage,
-    idQuote,
-    setId,
     previousPage,
     randomPage,
+    setId,
+    quote,
+    previousQuote,
+    nextQuote,
+    randomQuote,
   };
 
   return (

@@ -9,9 +9,6 @@ export const MultipleQuotes = () => {
   const { quotes, previousPage, nextPage, randomPage } =
     useContext(QuotesContext);
 
-  console.log('Multiple Quotes');
-  console.log(quotes);
-
   return (
     <QuoteContainer>
       <h2>Quotes</h2>

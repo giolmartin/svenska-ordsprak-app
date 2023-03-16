@@ -78,13 +78,15 @@ async function saveQuote(quote) {
   }
 }
 
-//Gets all quotes from the DB or paginated quotes set to 20 per page
+//Gets all quotes from the DB or paginated quotes set to 4 per page
 async function getAllQuotes(skip, limit) {
   return await quotes.find({}, '-_id -__v').skip(skip).limit(limit);
 }
 
 async function getQuoteById(id) {
-  const MAX_ID = (await getAllQuotes()).length;
+  // const MAX_ID = (await getAllQuotes()).length;
+  //changed to 3451 because of the API length is static and reduces requesting the whole array for lenght. Update if API db changes in length
+  const MAX_ID = 3451;
   const ID_NUMBER_OUT_OF_RANGE_STRING = `There is no quote with that id, please try again with a number between 1 and ${MAX_ID}`;
 
   //Check if quote_ID exists before finding it
