@@ -11,11 +11,11 @@ import {
 } from './single-quote.styles';
 
 const SingleQuote = () => {
-  const { setId, quote, nextQuote, previousQuote, randomQuote } =
+  const { id } = useParams();
+  const { setTheId, quote, nextQuote, previousQuote, randomQuote } =
     useContext(QuotesContext);
 
-  const { id } = useParams();
-  setId(id);
+  setTheId(id);
 
   return (
     <Fragment>

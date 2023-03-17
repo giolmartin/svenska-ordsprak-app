@@ -1,38 +1,48 @@
-import { DirectoryMenuContainer } from './directory.styles';
-import QuoteCard from '../quote-card/quote-card.component';
-
-const quotes = [
-  {
-    id: '1',
-    quote:
-      'The greatest glory in living lies not in never falling, but in rising every time we fall.',
-    translation:
-      'The greatest glory in living lies not in never falling, but in rising every time we fall.',
-  },
-  {
-    id: '2',
-    quote: 'The way to get started is to quit talking and begin doing.',
-    translation: 'The way to get started is to quit talking and begin doing.',
-  },
-  {
-    id: '3',
-    quote:
-      'Your time is limited, so dont waste it living someone elses life. Dont be trapped by dogma which is living with the results of other peoples thinking. Dont let the noise of others opinions drown out your own inner voice. And most important, have the courage to follow your heart and intuition. They somehow already know what you truly want to become. Everything else is secondary.',
-    translation:
-      'Your time is limited, so dont waste it living someone elses life. Dont be trapped by dogma which is living with the results of other peoples thinking. Dont let the noise of others opinions drown out your own inner voice. And most important, have the courage to follow your heart and intuition. They somehow already know what you truly want to become. Everything else is secondary.',
-  },
-];
-
+import {
+  DirectoryMenuContainer,
+  SingleQuoteContainer,
+  MultipleQuoteContainer,
+} from './directory.styles';
+import { useNavigate } from 'react-router-dom';
+import Button, { BUTTON_TYPE_CLASSES } from '../button/button.component';
+import { useContext } from 'react';
+import { QuotesContext } from '../../context/quotes.context';
 
 const Directory = () => {
-    return (
-      <DirectoryMenuContainer>
-        {quotes.map((quote) => (
-          <QuoteCard key={quote.id} q={quote} />
-        ))}
-      </DirectoryMenuContainer>
-    );
+  const navigate = useNavigate();
+  const { refreshID } = useContext(QuotesContext);
+
+  const navToSingle = () => {
+    const randomId = Math.floor(Math.random() * 3000);
+    console.log(randomId);
+    navigate(`/quotes/${randomId}`);
   };
-  
-  export default Directory;
-  
+
+  //Refresh Id so that the id doesnt stay the same when navigating to multiple quotes
+  //and fails the conditional if statement in the useEffect hook
+  const navToMultiple = () => {
+    navigate('/quotes');
+    refreshID();
+  };
+
+  return (
+    <DirectoryMenuContainer>
+      <h1>Welcome to Svenska Ordesprak</h1>
+      <SingleQuoteContainer>
+        <Button buttonType={BUTTON_TYPE_CLASSES.default} onClick={navToSingle}>
+          One Quote
+        </Button>
+      </SingleQuoteContainer>
+      <MultipleQuoteContainer>
+        <Button
+          buttonType={BUTTON_TYPE_CLASSES.default}
+          onClick={navToMultiple}
+        >
+          Multiple Quotes
+        </Button>
+      </MultipleQuoteContainer>
+    </DirectoryMenuContainer>
+  );
+};
+
+export default Directory;

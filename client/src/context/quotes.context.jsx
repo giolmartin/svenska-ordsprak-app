@@ -10,11 +10,13 @@ export const QuotesContext = createContext({
   nextPage: () => {},
   previousPage: () => {},
   randomPage: () => {},
+
   id: '',
   quote: {},
   previousQuote: () => {},
   nextQuote: () => {},
-  randomQuote: () => { },
+  randomQuote: () => {},
+  setTheId: () => {},
   loading: false,
 });
 
@@ -25,17 +27,24 @@ export const QuotesProvider = ({ children }) => {
 
   const [quote, setQuote] = useState({});
   const [id, setId] = useState('');
+
   const navigate = useNavigate();
 
   const [loading, setLoading] = useState(false); //TODO: Add loading state
 
-  const amountOfPages = Math.ceil(getTotalAmnountQuotes() / quotesPerPage);
-  const AMOUNT_OF_QUOTES = getTotalAmnountQuotes();
+  const AMOUNT_OF_QUOTES = 3451;
+  const amountOfPages = Math.ceil(AMOUNT_OF_QUOTES / quotesPerPage);
 
   useEffect(() => {
-    
+    /**
+     * @description: getQuotes from API, conditional on id to determine if single quote or multiple quotes must be fetched.
+     * @params {currentPage, id}
+     * @returns {quotes, quote}
+     *
+     */
     const getQuotes = async () => {
       let isSubscribed = true;
+
       //get query params from url
       const query = setQueryParams(currentPage, quotesPerPage);
       if (!isSubscribed) return;
@@ -48,13 +57,14 @@ export const QuotesProvider = ({ children }) => {
         setQuote(quote.find((q) => q.id === String(id)));
       }
       return () => {
-        // console.log('useEffect cleanup');
         isSubscribed = false;
       };
     };
+
     getQuotes();
   }, [currentPage, id]);
 
+  //-----------------Multiple Quote Route Helper Functions-----------------//
   const nextPage = () => {
     if (currentPage < amountOfPages) {
       setPage(currentPage + 1); //set query params in url
@@ -77,9 +87,24 @@ export const QuotesProvider = ({ children }) => {
   };
 
   //sets query params from url to state for a new fetch
+  //could be updated to use useQuery and useLocation hooks to get query params
+  //and fetch data on url change
+  //decided to use this method to avoid rerendering on url change and to avoid performance issues
   const setQueryParams = (page, limit) => {
     const query = { page: page, limit: limit };
     return query;
+  };
+
+  //-----------------Single Quote Route Helper Functions-----------------//
+  const setTheId = (id) => {
+    setId(id);
+  };
+
+  //Refresh Id so that the id doesnt stay the same when navigating to multiple quotes
+  //and fails the conditional if statement in the useEffect hook
+  //used in directory and navigation components
+  const refreshID = () => {
+    setTheId(null);
   };
 
   const previousQuote = () => {
@@ -112,7 +137,6 @@ export const QuotesProvider = ({ children }) => {
   const randomQuote = () => {
     try {
       const randomId = Math.ceil(Math.random() * AMOUNT_OF_QUOTES);
-      console.log('randomId: ', randomId);
       navigate(`/quotes/${randomId}`);
     } catch (error) {
       console.log(error);
@@ -124,7 +148,8 @@ export const QuotesProvider = ({ children }) => {
     nextPage,
     previousPage,
     randomPage,
-    setId,
+    refreshID,
+    setTheId,
     quote,
     previousQuote,
     nextQuote,
@@ -134,9 +159,4 @@ export const QuotesProvider = ({ children }) => {
   return (
     <QuotesContext.Provider value={value}>{children}</QuotesContext.Provider>
   );
-};
-
-export const getTotalAmnountQuotes = () => {
-  const AMOUNT_OF_QUOTES = 3451;
-  return AMOUNT_OF_QUOTES;
 };
