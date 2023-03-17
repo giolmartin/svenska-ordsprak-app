@@ -9,6 +9,7 @@ export const MultipleQuotes = () => {
   const { quotes, previousPage, nextPage, randomPage } =
     useContext(QuotesContext);
 
+  //TODO: Add styling to the page
   return (
     <QuoteContainer>
       <h2>Quotes</h2>

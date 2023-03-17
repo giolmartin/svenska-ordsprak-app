@@ -17,6 +17,7 @@ const SingleQuote = () => {
 
   setTheId(id);
 
+  //TODO: Add styling to the page
   return (
     <Fragment>
       <SingleQuoteContainer>

@@ -12,7 +12,7 @@ export const Navigation = () => {
   const randomId = Math.ceil(Math.random() * [1, 2, 3].length);
 
 
-
+//TODO: Add styling to the navigation
   return (
     <Fragment>
       <NavigationContainer>

@@ -25,6 +25,7 @@ const Directory = () => {
     refreshID();
   };
 
+  //TODO: Add Styling to the buttons
   return (
     <DirectoryMenuContainer>
       <h1>Welcome to Svenska Ordesprak</h1>

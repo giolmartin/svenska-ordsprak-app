@@ -9,6 +9,7 @@ import {
 const QuoteCard = ({ q }) => {
   const { id, quote, translation } = q;
 
+  //TODO: Add styling to the component
   return (
     <QuoteContainer>
       <QuoteCardFooter>{id}</QuoteCardFooter>

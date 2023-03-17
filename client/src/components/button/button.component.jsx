@@ -7,6 +7,8 @@ export const BUTTON_TYPE_CLASSES = {
   default: 'default',
 };
 
+//TODO: Add styles for this
+
 const getButton = (buttonType = BUTTON_TYPE_CLASSES.default) =>
   ({
     [BUTTON_TYPE_CLASSES.default]: BaseButton,
