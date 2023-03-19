@@ -10,8 +10,14 @@ const QuoteCard = ({ q }) => {
   const { id, quote, translation } = q;
 
   //TODO: Add styling to the component
+
+  const showTranslation = () => {
+    console.log(translation);
+    return translation;
+  };
+
   return (
-    <QuoteContainer>
+    <QuoteContainer onClick={showTranslation}>
       <QuoteCardFooter>{id}</QuoteCardFooter>
       <QuoteCardQuote>
         <p>{quote}</p>

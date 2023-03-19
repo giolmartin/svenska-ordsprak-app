@@ -4,6 +4,9 @@ import { useParams } from 'react-router-dom';
 import QuoteCard from '../../components/quote-card/quote-card.component';
 
 import { QuotesContext } from '../../context/quotes.context';
+import Button, {
+  BUTTON_TYPE_CLASSES,
+} from '../../components/button/button.component';
 
 import {
   SingleQuoteContainer,
@@ -29,9 +32,9 @@ const SingleQuote = () => {
           <button className='random-quote' onClick={randomQuote}>
             Random
           </button>
-          <button className='next-random-quote' onClick={nextQuote}>
+          <Button buttonType={BUTTON_TYPE_CLASSES.next} onClick={nextQuote}>
             Next
-          </button>
+          </Button>
         </QuoteButtonContainer>
       </SingleQuoteContainer>
     </Fragment>

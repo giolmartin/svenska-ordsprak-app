@@ -1,5 +1,19 @@
-import styled from 'styled-components';
+import styled, { css} from 'styled-components';
+import { ReactComponent as NextSvg } from '../../assets/buttons/nextB.svg';
+import Icon from '../../assets/buttons/next';
+const darkColor = '#635bff';
+const lightColor = '#80e9ff';
+// export const NextIcon = styled(NextSvg)``;
 
+export const NextIcon = styled(Icon)`
+ 
+
+  &:hover {
+    transition: all 1s ease;
+  }
+`;
+
+//TODO:  Fix this
 export const BaseButton = styled.button`
   min-width: 165px;
   width: auto;
@@ -24,11 +38,10 @@ export const BaseButton = styled.button`
   }
 `;
 
+//TODO:  Fix this
+export const NextButton = styled(BaseButton)``;
+export const PrevButton = styled(BaseButton)``;
+export const RandomButton = styled.button``;
 
 //TODO:  Fix this
-export const TwitterButton = styled(BaseButton)`
-`;
-
-//TODO:  Fix this
-export const InvertedButton = styled(BaseButton)`
-`;
+export const TwitterButton = styled(BaseButton)``;
