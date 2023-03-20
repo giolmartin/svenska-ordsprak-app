@@ -4,6 +4,9 @@ import { QuotesContext } from '../../context/quotes.context';
 
 import QuoteCard from '../../components/quote-card/quote-card.component';
 import { QuoteContainer, Preview } from './multiple-quotes.styles';
+import Button, {
+  BUTTON_TYPE_CLASSES,
+} from '../../components/button/button.component';
 
 export const MultipleQuotes = () => {
   const { quotes, previousPage, nextPage, randomPage } =
@@ -18,15 +21,15 @@ export const MultipleQuotes = () => {
           <QuoteCard key={quote.id} q={quote}></QuoteCard>
         ))}
       </Preview>
-      <button className='prev-page' onClick={previousPage}>
+      <Button buttonType={BUTTON_TYPE_CLASSES.previous} onClick={previousPage}>
         Previous
-      </button>
-      <button className='random-page' onClick={randomPage}>
+      </Button>
+      <Button buttonType={BUTTON_TYPE_CLASSES.default} onClick={randomPage}>
         Random
-      </button>
-      <button className='next-page' onClick={nextPage}>
+      </Button>
+      <Button buttonType={BUTTON_TYPE_CLASSES.next} onClick={nextPage}>
         Next
-      </button>
+      </Button>
     </QuoteContainer>
   );
 };

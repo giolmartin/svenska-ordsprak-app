@@ -22,11 +22,3 @@ function App() {
 }
 
 export default App;
-
-// <Routes>
-// <Route path='/' element={<Navigation />}>
-//   <Route index element={<Home />} />
-//   <Route path='quotes' element={<MultipleQuotes />} />
-//   <Route path='quotes/:id' element={<SingleQuote />} />
-// </Route>
-// </Routes>

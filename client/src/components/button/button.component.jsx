@@ -3,7 +3,7 @@ import {
   TwitterButton,
   NextButton,
   PrevButton,
-  NextIcon,
+  
 } from './button.styles';
 
 export const BUTTON_TYPE_CLASSES = {
@@ -18,7 +18,7 @@ export const BUTTON_TYPE_CLASSES = {
 const getButton = (buttonType = BUTTON_TYPE_CLASSES.default) =>
   ({
     [BUTTON_TYPE_CLASSES.default]: BaseButton,
-    [BUTTON_TYPE_CLASSES.next]: NextIcon,
+    [BUTTON_TYPE_CLASSES.next]: NextButton,
     [BUTTON_TYPE_CLASSES.previous]: PrevButton,
     [BUTTON_TYPE_CLASSES.twitter]: TwitterButton,
   }[buttonType]);

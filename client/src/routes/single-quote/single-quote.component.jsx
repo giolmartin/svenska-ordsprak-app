@@ -1,6 +1,5 @@
 import { useContext, Fragment } from 'react';
 import { useParams } from 'react-router-dom';
-// import Button from '../../components/button/button.component';
 import QuoteCard from '../../components/quote-card/quote-card.component';
 
 import { QuotesContext } from '../../context/quotes.context';
@@ -9,6 +8,7 @@ import Button, {
 } from '../../components/button/button.component';
 
 import {
+  PageContainer,
   SingleQuoteContainer,
   QuoteButtonContainer,
 } from './single-quote.styles';
@@ -22,22 +22,28 @@ const SingleQuote = () => {
 
   //TODO: Add styling to the page
   return (
-    <Fragment>
+    <PageContainer>
       <SingleQuoteContainer>
         <QuoteCard q={quote} />
         <QuoteButtonContainer>
-          <button className='previous-random-quote' onClick={previousQuote}>
+          <Button
+            buttonType={BUTTON_TYPE_CLASSES.previous}
+            onClick={previousQuote}
+          >
             Previous
-          </button>
-          <button className='random-quote' onClick={randomQuote}>
+          </Button>
+          <Button
+            buttonType={BUTTON_TYPE_CLASSES.default}
+            onClick={randomQuote}
+          >
             Random
-          </button>
+          </Button>
           <Button buttonType={BUTTON_TYPE_CLASSES.next} onClick={nextQuote}>
             Next
           </Button>
         </QuoteButtonContainer>
       </SingleQuoteContainer>
-    </Fragment>
+    </PageContainer>
   );
 };
 

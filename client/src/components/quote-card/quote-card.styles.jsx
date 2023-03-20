@@ -1,44 +1,23 @@
 import styled from 'styled-components';
 
 export const QuoteContainer = styled.div`
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  height: 350px;
+  width: 30vw;
+  height: 30vh;
+  max-width: 800px;
+  padding: 20px 30px;
+  border-radius: 10px;
   align-items: center;
   position: relative;
   margin-bottom: 30px;
-  background-color: #a2f3f4;
-
-  ${
-    '' /* img {
-    width: 100%;
-    height: 95%;
-    object-fit: cover;
-    margin-bottom: 5px;
-  } */
-  }
-  ${
-    '' /* 
-  button {
-    width: 80%;
-    opacity: 0.7;
-    position: absolute;
-    top: 255px;
-    display: none;
-  } */
-  }
+  background-color: rgba(255, 255, 255, 0.5);
+  box-shadow: 0 10px 10px 10px rgba(0, 0, 0, 0.2);
 
   &:hover {
-    img {
-      opacity: 0.8;
-    }
-    ${
-      '' /* button {
-      opacity: 0.85;
-      display: flex;
-    } */
-    }
+    opacity: 0.8;
+  }
+
+  .h2 {
+    font-size: font-size: 2rem;
   }
 `;
 
@@ -50,11 +29,11 @@ export const QuoteCardFooter = styled.div`
   font-size: 18px;
 `;
 
-export const QuoteCardQuote = styled.span`
+export const QuoteCardQuote = styled.p`
   width: 90%;
   margin-bottom: 15px;
 `;
-export const QuoteCardTranslation = styled.span`
+export const QuoteCardTranslation = styled.p`
   width: 90%;
   margin-bottom: 15px;
 `;
