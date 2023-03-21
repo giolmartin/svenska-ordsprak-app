@@ -10,18 +10,6 @@ export const PageContainer = styled.div`
   width: 100%;
   height: 100vh;
   background-color: green;
-
-  @media  screen and(min-width: 992px) {
- width: auto
-  padding: 10px;
-  background-color: red;
-  }
-  @media  screen and(min-width: 768px) {
- width: auto
-  padding: 10px;
-  background-color: red;
-  }
-
 `;
 
 export const QuoteButtonContainer = styled.div`
