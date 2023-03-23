@@ -1,19 +1,24 @@
 import styled from 'styled-components';
 import { Container, Section } from '../../global.styles';
 
-export const QuoteContainer = styled(Section)`
-  background: linear-gradient(to top right, #ffce00, #563cc9, #00559b);
-
-  background-size: cover;
-  background-attachment: fixed;
+export const QuoteContainer = styled.div`
+  background: linear-gradient(
+      336deg,
+      rgba(254, 204, 2, 0.4),
+      rgba(0, 85, 155, 0.21) 70%
+    ),
+    linear-gradient(217deg, rgba(0, 85, 155, 0.91), rgba(254, 204, 2, 0.5) 70%),
+    linear-gradient(127deg, rgba(254, 204, 2, 1), rgba(0, 85, 155, 1) 70.71%);
+  margin: 0 auto;
   display: flex;
+
   flex-direction: column;
   justify-content: center;
   align-items: center;
   overflow: hidden;
-  z-index: 11;
+  z-index: 1;
   @media screen and (max-width: 960px) {
-    margin-top: 5rem;
+    ${'' /* margin-top: 5rem; */}
   }
 `;
 
@@ -32,12 +37,15 @@ export const Preview = styled.div`
 `;
 
 export const ButtonContainer = styled.div`
-display: flex;
-justify-content: center;
-align-items: center;
-margin-top: 20px;
-
-@media screen and (max-width: 960px) {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  flex-flow: wrap;
   margin-top: 20px;
-  flex-direction: column-reverse;
+  gap: 0.5rem;
+
+  @media screen and (max-width: 960px) {
+    margin-top: 20px;
+    flex-direction: column-reverse;
+  }
 `;

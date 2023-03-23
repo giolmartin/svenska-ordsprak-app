@@ -71,6 +71,7 @@ export const QuotesProvider = ({ children }) => {
     } else {
       setPage(1);
     }
+    window.scrollTo(0, 0);
   };
 
   const previousPage = () => {
@@ -79,11 +80,13 @@ export const QuotesProvider = ({ children }) => {
     } else {
       setPage(amountOfPages); //set to last page
     }
+    window.scrollTo(0, 0);
   };
 
   const randomPage = () => {
     const randomPage = Math.floor(Math.random() * amountOfPages);
     setPage(randomPage);
+    window.scrollTo(0, 0);
   };
 
   //sets query params from url to state for a new fetch

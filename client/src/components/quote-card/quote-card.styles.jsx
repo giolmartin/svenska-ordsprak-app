@@ -1,15 +1,16 @@
 import styled from 'styled-components';
 
 export const QuoteContainer = styled.div`
-  width: 30vw;
+  width: auto;
   height: 30vh;
   max-width: 800px;
   padding: 20px 30px;
   border-radius: 10px;
   align-items: center;
   position: relative;
+  overflow: hidden;
   margin-bottom: 30px;
-  background-color: rgba(255, 255, 255, 0.5);
+  background-color: rgba(255, 255, 255, 0.2);
   box-shadow: 0 10px 10px 10px rgba(0, 0, 0, 0.2);
 
   &:hover {
@@ -19,21 +20,36 @@ export const QuoteContainer = styled.div`
   .h2 {
     font-size: font-size: 2rem;
   }
+
+  
+  @media screen and (max-width: 800px) {
+  margin: auto 10px;
+  width: 90vw;
+  }
 `;
 
-export const QuoteCardFooter = styled.div`
+export const TextWrapper = styled.div`
   width: 100%;
-  height: 5%;
+  height: 100%;
   display: flex;
-  justify-content: space-between;
-  font-size: 18px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 `;
 
-export const QuoteCardQuote = styled.p`
+export const QuoteCardHeaders = styled.h3`
+  color: #000;
   width: 90%;
   margin-bottom: 15px;
 `;
-export const QuoteCardTranslation = styled.p`
+
+export const QuoteCardText = styled.p`
+  color: #000;
   width: 90%;
   margin-bottom: 15px;
+  font-size: 1.3rem;
+
+  @media screen and (max-width: 800px) {
+    font-size: 1rem;
+  }
 `;

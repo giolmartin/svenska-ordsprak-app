@@ -1,9 +1,11 @@
 // import Button from '../button/button.component';
 import {
   QuoteContainer,
-  QuoteCardFooter,
   QuoteCardQuote,
   QuoteCardTranslation,
+  TextWrapper,
+  QuoteCardHeaders,
+  QuoteCardText,
 } from './quote-card.styles';
 
 const QuoteCard = ({ q }) => {
@@ -16,15 +18,24 @@ const QuoteCard = ({ q }) => {
     return translation;
   };
 
+  const addSpace = (text) => {
+    const newText = '\xa0' + text;
+    console.log(newText);
+    return newText;
+  };
+
   return (
     <QuoteContainer onClick={showTranslation}>
-      <QuoteCardFooter>{id}</QuoteCardFooter>
-      <QuoteCardQuote>
-        <p>{quote}</p>
-      </QuoteCardQuote>
-      <QuoteCardTranslation>
-        <p>{translation}</p>
-      </QuoteCardTranslation>
+      <TextWrapper>
+        <QuoteCardText>
+          <QuoteCardHeaders> Quote: </QuoteCardHeaders>
+          {quote}
+        </QuoteCardText>
+        <QuoteCardText>
+          <QuoteCardHeaders>Translation</QuoteCardHeaders>
+          <p>{translation}</p>
+        </QuoteCardText>
+      </TextWrapper>
     </QuoteContainer>
   );
 };

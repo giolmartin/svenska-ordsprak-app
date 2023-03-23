@@ -14,8 +14,14 @@ import Button, {
 } from '../../components/button/button.component';
 
 const MultipleQuotes = () => {
-  const { previousPage, nextPage, randomPage } = useContext(QuotesContext); //quotes,
+  const {
+    // quotes,
+    previousPage,
+    nextPage,
+    randomPage,
+  } = useContext(QuotesContext); //quotes,
 
+  const inverse = true;
   // console.log(quotes);
   const quotes = [
     {
@@ -43,15 +49,27 @@ const MultipleQuotes = () => {
         'Aprende más de los fracasos que de los éxitos. No te detengas. El fracaso construye el carácter.',
     },
   ];
-  //TODO: Add styling to the page
-  const inverse = true;
+
+  const getQuotesDevices = (quotes) => {
+    if (window.innerWidth > 800) {
+      return quotes.map((quote) => (
+        <QuoteCard key={quote.id} q={quote}></QuoteCard>
+      ));
+    } else {
+      quotes = quotes.slice(0, 2);
+      return quotes.map((quote) => (
+        <QuoteCard key={quote.id} q={quote}></QuoteCard>
+      ));
+    }
+  };
   return (
     <QuoteContainer>
       <Heading inverse={inverse}>Quotes</Heading>
       <Preview>
-        {quotes.map((quote) => (
+        {getQuotesDevices(quotes)}
+        {/* {quotes.map((quote) => (
           <QuoteCard key={quote.id} q={quote}></QuoteCard>
-        ))}
+        ))} */}
       </Preview>
 
       <ButtonContainer>
