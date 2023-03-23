@@ -9,33 +9,27 @@ export const PageContainer = styled.div`
   overflow: hidden;
   width: 100%;
   height: 100vh;
-  background-color: green;
+  background-color: red;
+  z-index: 1;
+  @media only screen and(min-width: 960px) {
+    width: auto;
+    height: 100vh;
+  }
 `;
 
 export const QuoteButtonContainer = styled.div`
+  width: 100%;
   display: flex;
   justify-content: center;
-  align-items: center;
-  margin: 0 auto;
-  width: 50%;
-  button {
-    border: none;
+  flex-flow: wrap;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  gap: 0.5rem;
 
-    padding: 10px 20px;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: all 0.3s ease-in-out;
-  }
-  @media only screen and(min-width: 992px) {
-    display: flex;
-    justify-content: space-between;
-    width: 50%;
- width: auto
-  padding: 10px;
-  }
-  @media only screen and(min-width: 768px) {
- width: auto
-  padding: 10px;
+  @media screen and (max-width: 960px) {
+    margin-top: 20px;
+    flex-direction: column-reverse;
+    align-items: center;
   }
 `;
 
@@ -46,11 +40,15 @@ export const SingleQuoteContainer = styled.div`
   justify-content: center;
   margin: 0 auto;
   grid-template-columns: repeat(4, 1fr);
-  column-gap: 20px;
+
   row-gap: 50px;
 
-  ${QuoteButtonContainer} {
-    ${'' /* grid-column: 1 / -1; */}
+  @media only screen and(min-width: 960px) {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
   }
 `;
 

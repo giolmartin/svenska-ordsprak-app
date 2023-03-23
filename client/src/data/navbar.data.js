@@ -10,8 +10,8 @@ export const navbarData = [
     text: 'Quotes',
   },
   {
-    // to: `/quotes/${randomId}`,
-    to: `/quotes/1`,
+    to: `/quotes/${randomId}`,
+    // to: `/quotes/1`,
     text: 'Single Quote',
   },
 ];

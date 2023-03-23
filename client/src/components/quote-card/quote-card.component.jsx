@@ -1,4 +1,5 @@
 // import Button from '../button/button.component';
+
 import {
   QuoteContainer,
   QuoteCardQuote,
@@ -6,6 +7,7 @@ import {
   TextWrapper,
   QuoteCardHeaders,
   QuoteCardText,
+  Twitter,
 } from './quote-card.styles';
 
 const QuoteCard = ({ q }) => {
@@ -24,17 +26,26 @@ const QuoteCard = ({ q }) => {
     return newText;
   };
 
+  const shareWithTwitter = () => {
+    const text = ` Can you guess the phrase in Swedish? ${translation}`;
+
+    const url = `https://twitter.com/intent/tweet?text=${text}`;
+    window.open(url, '_blank');
+  };
+
   return (
     <QuoteContainer onClick={showTranslation}>
       <TextWrapper>
         <QuoteCardText>
           <QuoteCardHeaders> Quote: </QuoteCardHeaders>
+
           {quote}
         </QuoteCardText>
         <QuoteCardText>
-          <QuoteCardHeaders>Translation</QuoteCardHeaders>
+          <QuoteCardHeaders>Translation: </QuoteCardHeaders>
           <p>{translation}</p>
         </QuoteCardText>
+        <Twitter onClick={shareWithTwitter} />
       </TextWrapper>
     </QuoteContainer>
   );

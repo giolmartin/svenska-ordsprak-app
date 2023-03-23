@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useContext, useEffect, useState } from 'react';
 
 import { QuotesContext } from '../../context/quotes.context';
 
@@ -14,13 +14,8 @@ import Button, {
 } from '../../components/button/button.component';
 
 const MultipleQuotes = () => {
-  const {
-    // quotes,
-    previousPage,
-    nextPage,
-    randomPage,
-  } = useContext(QuotesContext); //quotes,
-
+  const { previousPage, nextPage, randomPage } = useContext(QuotesContext); //quotes,
+  const [view, setView] = useState();
   const inverse = true;
   // console.log(quotes);
   const quotes = [
@@ -50,27 +45,37 @@ const MultipleQuotes = () => {
     },
   ];
 
+  useEffect(() => {
+    window.addEventListener('resize', () => {
+      if (window.innerWidth > 960) {
+        console.log('view', view);
+        setView(true);
+      } else {
+        console.log('view ', view);
+        setView(false);
+      }
+    });
+  }, []);
+
   const getQuotesDevices = (quotes) => {
-    if (window.innerWidth > 800) {
-      return quotes.map((quote) => (
-        <QuoteCard key={quote.id} q={quote}></QuoteCard>
-      ));
-    } else {
-      quotes = quotes.slice(0, 2);
-      return quotes.map((quote) => (
-        <QuoteCard key={quote.id} q={quote}></QuoteCard>
-      ));
-    }
+    return quotes.map((quote) => (
+      <QuoteCard key={quote.id} q={quote}></QuoteCard>
+    ));
+    // if (view) {
+    //   return quotes.map((quote) => (
+    //     <QuoteCard key={quote.id} q={quote}></QuoteCard>
+    //   ));
+    // } else {
+    //   quotes = quotes.slice(0, 3);
+    //   return quotes.map((quote) => (
+    //     <QuoteCard key={quote.id} q={quote}></QuoteCard>
+    //   ));
+    // }
   };
   return (
     <QuoteContainer>
-      <Heading inverse={inverse}>Quotes</Heading>
-      <Preview>
-        {getQuotesDevices(quotes)}
-        {/* {quotes.map((quote) => (
-          <QuoteCard key={quote.id} q={quote}></QuoteCard>
-        ))} */}
-      </Preview>
+      {/* <Heading inverse={inverse}>Quotes</Heading> */}
+      <Preview>{getQuotesDevices(quotes)}</Preview>
 
       <ButtonContainer>
         <Button

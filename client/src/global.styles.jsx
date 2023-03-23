@@ -26,12 +26,17 @@ export const Section = styled.div`
 `;
 
 export const Heading = styled.h2`
+  margin-top: 6rem;
   margin-bottom: 1.4rem;
   font-size: 3rem;
   text-align: center;
   line-height: 1.1;
   font-weight: 600;
   color: ${({ inverse }) => (inverse ? '#ffce00' : '#00559b')};
+  @media screen and (max-width: 960px) {
+    font-size: 2.5rem;
+    margin-top: 4rem;
+  }
 `;
 
 export default GlobalStyle;
